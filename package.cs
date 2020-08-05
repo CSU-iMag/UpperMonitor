@@ -2,7 +2,6 @@
 using System.Collections;
 using System.IO.Ports;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using System.Text;
 
@@ -181,9 +180,9 @@ namespace UperMonitor
         public void DecodePayload(byte[] payload)
         {
             steering = payload[1];
-            sensor = new byte[8];
-            for (int i = 0; i < 8; ++i)
-                sensor[i] = payload[i];
+            sensor = new byte[7];
+            for (int i = 0; i < 7; ++i)
+                sensor[i] = payload[i + 2];
         }
     }
 
@@ -208,9 +207,6 @@ namespace UperMonitor
         {
             Width = payload[1];
             Error = payload[2];
-            Left = payload[3];
-            Middle = payload[4];
-            Right = payload[5];
         }
     }
 

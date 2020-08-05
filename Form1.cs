@@ -60,7 +60,7 @@ namespace UperMonitor
             foreach (var it in buf)
             {
                 ++cnt;
-                for (int i = 0; i < 8; ++i)
+                for (int i = 0; i < 7; ++i)
                     magChart.Series[i].Points.AddXY(cnt, it.sensor[i]);
             }
         }
@@ -179,7 +179,6 @@ namespace UperMonitor
             packMgr.PackAndPush(port, 0x2c, enabled);
         }
 
-        int txLast, rxLast;
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
@@ -195,13 +194,13 @@ namespace UperMonitor
                     foreach (DeepPackage it in packMgr.MagBuf)
                     {
                         sw.Write(it.steering);
-                        for (int i = 0; i < 7; ++i)
+                        for (int i = 0; i < 6; ++i)
                         {
                             sw.Write(',');
                             sw.Write(it.sensor[i]);
                         }
                             sw.Write(',');
-                        sw.WriteLine(it.sensor[7]);
+                        sw.WriteLine(it.sensor[6]);
                     }
                     Thread.EndCriticalRegion();
                 }
@@ -214,6 +213,7 @@ namespace UperMonitor
             Thread.EndCriticalRegion();
         }
 
+        int txLast, rxLast;
         private void timerTrans_Tick(object sender, EventArgs e)
         {
             lblRxBytes.Text = "已接收" + packMgr.rxCount.ToString() + "字节";
