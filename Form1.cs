@@ -94,12 +94,15 @@ namespace UperMonitor
             int cnt = 0;
             foreach (var it in steerChart.Series)
                 it.Points.Clear();
+
+            Thread.BeginCriticalRegion();
             foreach (SteerPackage it in packMgr.SteerBuf)
             {
                 steerChart.Series[0].Points.AddXY(cnt, it.Error);
                 steerChart.Series[1].Points.AddXY(cnt, it.Width);
                 ++cnt;
             }
+            Thread.EndCriticalRegion();
         }
 
         private void Form1_Load(object sender, EventArgs e)
