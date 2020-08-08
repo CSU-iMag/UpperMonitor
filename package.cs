@@ -17,7 +17,7 @@ namespace UperMonitor
         public ArrayList SpeedBuf = new ArrayList(),
             SteerBuf = new ArrayList(), MagBuf = new ArrayList();
         private byte lastByte = EOT, bufTop = 0;
-        private byte[] rxBuffer = new byte[39];
+        private byte[] rxBuffer = new byte[99];
 
         public void PackAndPush(SerialPort port, byte id, byte[] payload)
         {

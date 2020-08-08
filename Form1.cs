@@ -79,9 +79,9 @@ namespace UperMonitor
 
             foreach (SpeedPackage it in buf)
             {
-                if (it.SpeedL > -128 && it.SpeedL < 128)
+                //if (it.SpeedL > -128 && it.SpeedL < 128)
                     speedChart.Series[0].Points.AddXY(cnt, it.SpeedL);
-                if (it.SpeedR > -128 && it.SpeedR < 128)
+                //if (it.SpeedR > -128 && it.SpeedR < 128)
                     speedChart.Series[1].Points.AddXY(cnt, it.SpeedR);
                 speedChart.Series[2].Points.AddXY(cnt, it.DutyL);
                 speedChart.Series[3].Points.AddXY(cnt, it.DutyR);
@@ -217,6 +217,22 @@ namespace UperMonitor
         }
 
         int txLast, rxLast;
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveDeepDialog.ShowDialog() == DialogResult.OK)
+                using (StreamWriter sw = new StreamWriter(saveDeepDialog.FileName))
+                {
+                    Thread.BeginCriticalRegion();
+                    foreach(SteerPackage it in packMgr.SteerBuf)
+                    {
+                        sw.Write(it.Width);
+                        sw.Write(',');
+                        sw.WriteLine(it.Error);
+                    }
+            Thread.EndCriticalRegion();
+                }
+        }
         private void timerTrans_Tick(object sender, EventArgs e)
         {
             lblRxBytes.Text = "已接收" + packMgr.rxCount.ToString() + "字节";
